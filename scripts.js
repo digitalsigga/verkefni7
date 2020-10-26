@@ -9,9 +9,9 @@ const LETTERS = `AÁBDÐEÉFGHIÍJKLMNOÓPRSTUÚVXYÝÞÆÖ`;
  */
 function start() {
   alert('Halló!')
+  let op = prompt('Hello');
 }
 
-prompt("What is your name?");
 
 // Hér er gott að commenta út til að vinna í encode/decode föllum fyrst og síðan „viðmóti“ forrits
 start();
