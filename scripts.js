@@ -5,13 +5,9 @@
 const LETTERS = 'AÁBDÐEÉFGHIÍJKLMNOÓPRSTUÚVXYÝÞÆÖ';
 const code = 3;
 
-/**
- * Byrja forrit.
- */
 function start() {
-  alert('Halló!')
   let question = prompt('Hvort viltu kóða eða afkóða streng? Skrifaðu kóða eða afkóða');
-  spurja(question);
+  asker(question);
 }
 
 
@@ -27,13 +23,11 @@ start();
  */
 function encode(str, n) {
     let encode_string = "";
-    for (let i =0; 1 < str.length; i++) {
-        // console.log(str.charAt(i));
+    for (let i = 0; i < str.length; i++) {
         let index = LETTERS.indexOf(str.charAt(i));
-        encode_string += (LETTERS.length + (index + n)) % LETTERS.length;
-
+        encode_string += (LETTERS.charAt((LETTERS.length + (index + n)) % LETTERS.length));
     }
-  return encode_string;
+    return encode_string;
 }
 
 /**
@@ -45,54 +39,56 @@ function encode(str, n) {
  */
 function decode(str, n) {
     let decode_string = "";
-    for (let i =0; 1 < str.length; i++) {
-        // console.log(str.charAt(i));
+    for (let i =0; i < str.length; i++) {
         let index = LETTERS.indexOf(str.charAt(i));
-        decode_string += (LETTERS.length + (index - n)) % LETTERS.length;
-
-
-  return decode_string;
+        decode_string += (LETTERS.charAt((LETTERS.length + (index - n)) % LETTERS.length));
+    }
+    return decode_string;
 }
 
-function spurja() {
-    if (question === 'Kóða') {
-        let un = prompt('Hver er strengurinn?: ');
-        if (tungumal(un) === "") {
-            spurjatvo(un, 0);
-        } else {
-            let x = prompt("Þú gafst upp staf sem ekki hægt að "+ question +":" tungumal(un) +".Reyndu aftur.");
-            spurja(x);
-        }
-    } if else (question === 'Afkóða') {
-        let deux = prompt('Hver er strengurinn?: ');
-        if (tungumal(deux) === "") {
-            askertvo(deux, 1);
-        }
-        let y = prompt("Þú gafst upp staf sem ekki hægt að "+ question +":" tungumal(un) +".Reyndu aftur.");
-            spurja(y);
-    } else {
-        let trois = prompt("Veit ekki hvaða aðgerð "+ question +" er. Reyndu aftur. : ");
-        spurja(trois);
+/**
+ * @param {String} question Spyr hver strengurinn sé
+ */
 
+function asker(question) {
+    if (question === 'Kóða') {
+        let koda = prompt('Hver er strengurinn?: ');
+        if (tungumal(koda) == "") {
+            askertwo(koda, 0);
+        } else {
+            let villa = prompt("Þú gafst upp staf sem ekki er hægt að "+ question +": "+ tungumal(koda) +".Reyndu aftur.");
+            asker(villa);
+        }
+    } if (question === 'Afkóða') {
+        let afkoda = prompt('Hver er strengurinn?: ');
+        if (tungumal(afkoda) == "") {
+            askertwo(afkoda, 1);
+        } else {
+        let villa2 = prompt("Þú gafst upp staf sem ekki er hægt að "+ question +": "+ tungumal(afkoda) +".Reyndu aftur.");
+            asker(villa2);
+        }
+    } else {
+        let fail = prompt("Veit ekki hvaða aðgerð "+ question +" er. Reyndu aftur. : ");
+        asker(fail);
     }
 }
 
-    function spurjatvo(newquestion, codemaster) {
-        let d = Number.parseInt(prompt("Hversu mikið á að hliðra streng? Gefðu upp heiltölu á bilinu [1, 31]"));
-        if ((0 < Number.isInteger(n)) && (Number.isInteger(n) > 32)) {
+    function askertwo(newquestion, codemaster) {
+        let n = Number.parseInt(prompt("Hversu mikið á að hliðra streng? Gefðu upp heiltölu á bilinu [1, 31]: "));
+        if ((Number.isInteger(n)) && (0 < n) && (n < 32)) {
             if (codemaster = 0) {
-                encode(toLocalUpperCase(newquestion), d);
-            } else if (codemaster - 1) {
-                decode(toLocalUpperCase(newquestion), d);
+                confirm("Kóðaður: "+ encode(newquestion.toLocalUpperCase(), n));
+            } else if (codemaster = 1) {
+                confirm("Afkóðaður: "+ decode(newquestion.toLocalUpperCase(), n));
             } 
         }
         else {
-            let e = prompt("Ekki rétt tala? Reyndu aftur");
-            spurjatvo(e); 
+            let wrong = prompt("Ekki rétt tala. Reyndu aftur");
+            askertwo(wrong); 
     }
 }
 
-function tungumal() {
+function tungumal(str) {
     for (let i = 0; i < str.length; i++) {
         let focusString = "";
         if (LETTERS.indexOf(str.charAt(i)) == -1) {
@@ -101,10 +97,10 @@ function tungumal() {
          return focusString;
         }
     }
-}
-// console.assert(encode('A', 3) === 'D', 'kóðun á A með n=3 er D');
-// console.assert(decode('D', 3) === 'A', 'afkóðun á D með n=3 er A');
-// console.assert(encode('AÁBDÐEÉFGHIÍJKLMNOÓPRSTUÚVXYÝÞÆÖ', 32) === 'AÁBDÐEÉFGHIÍJKLMNOÓPRSTUÚVXYÝÞÆÖ', 'kóðun með n=32 er byrjunarstrengur');
-// console.assert(encode('AÁBDÐEÉFGHIÍJKLMNOÓPRSTUÚVXYÝÞÆÖ', 3) === 'DÐEÉFGHIÍJKLMNOÓPRSTUÚVXYÝÞÆÖAÁB', 'kóðun á stafrófi með n=3');
-// console.assert(decode('DÐEÉFGHIÍJKLMNOÓPRSTUÚVXYÝÞÆÖAÁB', 3) === 'AÁBDÐEÉFGHIÍJKLMNOÓPRSTUÚVXYÝÞÆÖ', 'afkóðun á stafrófi með n=3');
-// console.assert(decode(encode('HALLÓHEIMUR', 13), 13) === 'HALLÓHEIMUR', 'kóðun og afkóðun eru andhverf');
+
+console.assert(encode('A', 3) === 'D', 'kóðun á A með n=3 er D');
+console.assert(decode('D', 3) === 'A', 'afkóðun á D með n=3 er A');
+console.assert(encode('AÁBDÐEÉFGHIÍJKLMNOÓPRSTUÚVXYÝÞÆÖ', 32) === 'AÁBDÐEÉFGHIÍJKLMNOÓPRSTUÚVXYÝÞÆÖ', 'kóðun með n=32 er byrjunarstrengur');
+console.assert(encode('AÁBDÐEÉFGHIÍJKLMNOÓPRSTUÚVXYÝÞÆÖ', 3) === 'DÐEÉFGHIÍJKLMNOÓPRSTUÚVXYÝÞÆÖAÁB', 'kóðun á stafrófi með n=3');
+console.assert(decode('DÐEÉFGHIÍJKLMNOÓPRSTUÚVXYÝÞÆÖAÁB', 3) === 'AÁBDÐEÉFGHIÍJKLMNOÓPRSTUÚVXYÝÞÆÖ', 'afkóðun á stafrófi með n=3');
+console.assert(decode(encode('HALLÓHEIMUR', 13), 13) === 'HALLÓHEIMUR', 'kóðun og afkóðun eru andhverf');
